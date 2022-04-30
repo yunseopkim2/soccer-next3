@@ -7,7 +7,7 @@ const App = ({ Component, pageProps }) => {
   <Nav/>
        <Header/>
     <Component {...pageProps} />
-    <Footer class = "footer"/>
+    <Footer/>
   </div>
   )
   

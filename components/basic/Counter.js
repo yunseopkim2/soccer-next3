@@ -1,11 +1,11 @@
 import React from 'react';
 
-export function Counter({ onIncrease, onDecrease, number }){
+export function Counter({ increase, decrease, number }){
   return (
     <div>
       <h1>{number}</h1>
-      <button onClick={onIncrease}>+1</button>
-      <button onClick={onDecrease}>-1</button>
+      <button onClick={increase}>+1</button>
+      <button onClick={decrease}>-1</button>
     </div>
   );
 };

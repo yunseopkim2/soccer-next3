@@ -9,10 +9,7 @@ import { styled } from '@mui/material/styles';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
-import MenuIcon from '@mui/icons-material/Menu';
-import Router from "next/router";
-
+import { userSelector, useSelector } from 'react-redux'
 import Link from "next/link";
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -27,8 +24,7 @@ const HomeIcon = createSvgIcon(
   'Home',
 );
 
-const pages = ['카운터', '계산기', 'BMI', '게시판'];
-const preSettings = ['회원가입', '로그인'];
+const preSettings = ['회원가입', '로그인', '프로파일'];
 const postSettings = ['프로필', '로그아웃', '회원정보수정', '회원탈퇴'];
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -64,7 +60,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
   height: 22,
   border: `2px solid ${theme.palette.background.paper}`,
 }));
-
+const pages = {subTitles: ['카운터', '계산기', 'BMI', '게시판'], urls: ["/basic/counter","/basic/calc","/basic/bmi", '/board/list']};
 export function Nav(){
   const [userUrls, setUserUrls] = useState([])
   const [userSubTitle, setUserSubTitle] = useState([])
@@ -89,26 +85,22 @@ export function Nav(){
   const handleJoin = (value) => {
      alert('handleJoin'+ value)
      switch (value) {
-      case '회원가입': window.location.href = '/user/join'
+      case '회원가입': window.location.href = '/auth/register'
         break;
-      case '로그인' : window.location.href = '/user/login'
+      case '로그인' : window.location.href = '/auth/login'
         break;
       default :  window.location.href = '/'
         break;
     }
     setAnchorElUser(null);
   };
+  const loginUser = useSelector(state => state.login.loginUser)
 
-
-  useEffect(() => {
-    const loginUser = localStorage.getItem("loginUser")
+ useEffect(() => {
     if (loginUser === null) {
-      setUserUrls(["/user/join","/user/login"])
-      setUserSubTitle(["회원가입", "로그인"])
-      
+      setUserUrls({subTitles: ['회원가입', '로그인'], urls: ["/auth/register","/auth/login"]})
     } else {
-      setUserUrls(["/user/logout","/user/profile","/user/modifyUser","/user/delUser","user/getUsers"])
-      setUserSubTitle(["로그아웃","프로필","회원수정","회원탈퇴","회원목록"])
+      setUserUrls({subTitles: ["프로필", "정보수정", "로그아웃" , "회원탈퇴"], urls: ["/auth/profile", "/auth/modifyUser", "/auth/logout", "/auth/delUser"]})
     }
   }, [])
 
@@ -139,7 +131,19 @@ export function Nav(){
         break;
     }
   }
-
+  const handleAuth = (value) => {
+    alert('handleAuth '+value)
+    switch(value) {
+      case '회원가입':  window.location.href='/auth/register' 
+                      break;
+      case '로그인':  window.location.href='/auth/login' 
+        break;
+       case '프로파일':  window.location.href='/auth/profile' 
+                      break;
+      default: window.location.href='/'
+                      break;
+    }
+  }
   return (
    <AppBar position="static" style={{marginBottom:"30px"}} >
       <Container maxWidth="xl">
@@ -214,7 +218,7 @@ export function Nav(){
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >  {preSettings.map((setting) => (
-              <MenuItem key={setting} onClick={()=>handleJoin(setting)}>
+              <MenuItem key={setting} onClick={()=>handleAuth(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
