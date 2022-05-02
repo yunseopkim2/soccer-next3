@@ -1,4 +1,5 @@
 export * from './Footer'
+export * from './Home'
 export * from './Header'
 export * from './Layout'
 export * from './Modal'
