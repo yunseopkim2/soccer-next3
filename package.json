@@ -22,6 +22,7 @@
     "lodash": "^4.17.21",
     "module": "^1.2.5",
     "next": "12.1.0",
+    "next-redux-saga": "^4.1.2",
     "next-redux-wrapper": "^7.0.5",
     "react": "17.0.2",
     "react-dom": "17.0.2",
